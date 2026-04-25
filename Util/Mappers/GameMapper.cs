@@ -6,63 +6,71 @@ namespace Online_Store_Backend_WebAPI.Util.Mappers;
 
 public static class GameMapper
 {
-    public static GameVo ToVo(this Game game)
+    public static GameVo ToVo(this Game Game)
     {
         return new GameVo
         {
-            Id = game.Id,
-            PublisherId = game.PublisherId,
-            Name = game.Name,
-            Slug = game.Slug,
-            ShortDescription = game.ShortDescription,
-            LongDescription = game.LongDescription,
-            Status = game.Status,
-            ReleaseDate = game.ReleaseDate
+            Id = Game.Id,
+            PublisherId = Game.PublisherId,
+            Name = Game.Name,
+            Slug = Game.Slug,
+            ShortDescription = Game.ShortDescription,
+            LongDescription = Game.LongDescription,
+            Status = Game.Status,
+            ReleaseDate = Game.ReleaseDate,
+            CreatedAt = Game.CreatedAt,
+            UpdatedAt = Game.UpdatedAt
         };
     }
 
-    public static Game ToDbObject(this GameVo gameVo)
+    public static Game ToDbObject(this GameVo GameVo)
     {
         return new Game
         {
-            Id = gameVo.Id,
-            PublisherId = gameVo.PublisherId,
-            Name = gameVo.Name,
-            Slug = gameVo.Slug,
-            ShortDescription = gameVo.ShortDescription,
-            LongDescription = gameVo.LongDescription,
-            Status = gameVo.Status,
-            ReleaseDate = gameVo.ReleaseDate
+            Id = GameVo.Id,
+            PublisherId = GameVo.PublisherId,
+            Name = GameVo.Name,
+            Slug = GameVo.Slug,
+            ShortDescription = GameVo.ShortDescription,
+            LongDescription = GameVo.LongDescription,
+            Status = GameVo.Status,
+            ReleaseDate = GameVo.ReleaseDate,
+            CreatedAt = GameVo.CreatedAt,
+            UpdatedAt = GameVo.UpdatedAt
         };
     }
 
-    public static GameDto ToDto(this GameVo gameVo)
+    public static GameDto ToDto(this GameVo GameVo)
     {
         return new GameDto
         {
-            Id = gameVo.Id,
-            PublisherId = gameVo.PublisherId,
-            Name = gameVo.Name,
-            Slug = gameVo.Slug,
-            ShortDescription = gameVo.ShortDescription,
-            LongDescription = gameVo.LongDescription,
-            Status = gameVo.Status,
-            ReleaseDate = gameVo.ReleaseDate
+            Id = GameVo.Id,
+            PublisherId = GameVo.PublisherId,
+            Name = GameVo.Name,
+            Slug = GameVo.Slug,
+            ShortDescription = GameVo.ShortDescription,
+            LongDescription = GameVo.LongDescription,
+            Status = GameVo.Status,
+            ReleaseDate = GameVo.ReleaseDate,
+            CreatedAt = GameVo.CreatedAt,
+            UpdatedAt = GameVo.UpdatedAt
         };
     }
 
-    public static GameVo ToVo(this GameDto gameDto)
+    public static GameVo ToVo(this GameDto GameDto)
     {
         return new GameVo
         {
-            Id = gameDto.Id,
-            PublisherId = gameDto.PublisherId,
-            Name = gameDto.Name,
-            Slug = gameDto.Slug,
-            ShortDescription = gameDto.ShortDescription,
-            LongDescription = gameDto.LongDescription,
-            Status = gameDto.Status,
-            ReleaseDate = gameDto.ReleaseDate
+            Id = GameDto.Id,
+            PublisherId = GameDto.PublisherId,
+            Name = GameDto.Name,
+            Slug = GameDto.Slug,
+            ShortDescription = GameDto.ShortDescription,
+            LongDescription = GameDto.LongDescription,
+            Status = GameDto.Status,
+            ReleaseDate = GameDto.ReleaseDate,
+            CreatedAt = GameDto.CreatedAt,
+            UpdatedAt = GameDto.UpdatedAt
         };
     }
 }

@@ -14,16 +14,50 @@ public class GameRepository : IGameRepository
         _context = context;
     }
 
-    public async Task<IReadOnlyList<GameVo>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<GameVo>> GetCatalogAsync(ulong? publisherId = null, string? status = null, CancellationToken cancellationToken = default)
     {
-        var games = await _context.Games
+        var query = _context.Games
             .AsNoTracking()
-            .OrderBy(game => game.Name)
-            .Take(20)
+            .AsQueryable();
+
+        if (publisherId.HasValue)
+        {
+            query = query.Where(item => item.PublisherId == publisherId.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(status))
+        {
+            query = query.Where(item => item.Status == status);
+        }
+
+        var items = await query
+            .OrderBy(item => item.Name)
             .ToListAsync(cancellationToken);
 
-        return games
-            .Select(c => c.ToVo())
+        return items
+            .Select(item => item.ToVo())
+            .ToList();
+    }
+
+    public async Task<GameVo?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
+    {
+        var item = await _context.Games
+            .AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
+
+        return item?.ToVo();
+    }
+
+    public async Task<IReadOnlyList<GameVo>> GetByTagAsync(string tagSlug, CancellationToken cancellationToken = default)
+    {
+        var items = await _context.Games
+            .AsNoTracking()
+            .Where(item => item.Tags.Any(tag => tag.Slug == tagSlug))
+            .OrderBy(item => item.Name)
+            .ToListAsync(cancellationToken);
+
+        return items
+            .Select(item => item.ToVo())
             .ToList();
     }
 }

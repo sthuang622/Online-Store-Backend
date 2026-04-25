@@ -8,17 +8,37 @@ namespace Online_Store_Backend_WebAPI.Controllers;
 [Route("api/[controller]")]
 public class GamesController : ControllerBase
 {
-    private readonly IGameService _gameService;
+    private readonly IGameService _service;
 
-    public GamesController(IGameService gameService)
+    public GamesController(IGameService service)
     {
-        _gameService = gameService;
+        _service = service;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<GameDto>>> GetGames(CancellationToken cancellationToken)
+    [HttpGet("catalog")]
+    public async Task<ActionResult<IReadOnlyList<GameDto>>> GetCatalog([FromQuery] ulong? publisherId, [FromQuery] string? status, CancellationToken cancellationToken)
     {
-        var games = await _gameService.GetGamesAsync(cancellationToken);
-        return Ok(games);
+        var items = await _service.GetCatalogAsync(publisherId, status, cancellationToken);
+        return Ok(items);
+    }
+
+    [HttpGet("tag/{tagSlug}")]
+    public async Task<ActionResult<IReadOnlyList<GameDto>>> GetByTag(string tagSlug, CancellationToken cancellationToken)
+    {
+        var items = await _service.GetByTagAsync(tagSlug, cancellationToken);
+        return Ok(items);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<GameDto>> GetById(ulong id, CancellationToken cancellationToken)
+    {
+        var item = await _service.GetByIdAsync(id, cancellationToken);
+
+        if (item is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(item);
     }
 }

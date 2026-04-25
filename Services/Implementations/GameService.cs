@@ -7,19 +7,34 @@ namespace Online_Store_Backend_WebAPI.Services.Implementations;
 
 public class GameService : IGameService
 {
-    private readonly IGameRepository _gameRepository;
+    private readonly IGameRepository _repository;
 
-    public GameService(IGameRepository gameRepository)
+    public GameService(IGameRepository repository)
     {
-        _gameRepository = gameRepository;
+        _repository = repository;
     }
 
-    public async Task<IReadOnlyList<GameDto>> GetGamesAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<GameDto>> GetCatalogAsync(ulong? publisherId = null, string? status = null, CancellationToken cancellationToken = default)
     {
-        var games = await _gameRepository.GetAllAsync(cancellationToken);
+        var items = await _repository.GetCatalogAsync(publisherId, status, cancellationToken);
 
-        return games
-            .Select(c => c.ToDto())
+        return items
+            .Select(item => item.ToDto())
+            .ToList();
+    }
+
+    public async Task<GameDto?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
+    {
+        var item = await _repository.GetByIdAsync(id, cancellationToken);
+        return item?.ToDto();
+    }
+
+    public async Task<IReadOnlyList<GameDto>> GetByTagAsync(string tagSlug, CancellationToken cancellationToken = default)
+    {
+        var items = await _repository.GetByTagAsync(tagSlug, cancellationToken);
+
+        return items
+            .Select(item => item.ToDto())
             .ToList();
     }
 }

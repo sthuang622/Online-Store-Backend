@@ -17,4 +17,8 @@ public record GameDto
     public string Status { get; init; } = string.Empty;
 
     public DateOnly? ReleaseDate { get; init; }
+
+    public DateTime CreatedAt { get; init; }
+
+    public DateTime UpdatedAt { get; init; }
 }
