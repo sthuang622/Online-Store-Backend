@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Online_Store_Backend_WebAPI.Models.DTOs;
-using Online_Store_Backend_WebAPI.Services.Abstractions;
+using Online_Store_Backend_WebAPI.Services.Store.Abstractions;
 
 namespace Online_Store_Backend_WebAPI.Controllers;
 

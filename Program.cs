@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Repositories.Implementations;
-using Online_Store_Backend_WebAPI.Services.Abstractions;
-using Online_Store_Backend_WebAPI.Services.Implementations;
+using Online_Store_Backend_WebAPI.Services.Store.Abstractions;
+using Online_Store_Backend_WebAPI.Services.Store.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
