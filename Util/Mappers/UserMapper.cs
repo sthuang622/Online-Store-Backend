@@ -14,7 +14,8 @@ public static class UserMapper
             Email = User.Email,
             Username = User.Username,
             PasswordHash = User.PasswordHash,
-            Status = User.Status,
+            DisplayName = User.DisplayName ?? "",
+            Status = User.Status ?? "",
             CreatedAt = User.CreatedAt,
             UpdatedAt = User.UpdatedAt
         };
@@ -28,6 +29,7 @@ public static class UserMapper
             Email = UserVo.Email,
             Username = UserVo.Username,
             PasswordHash = UserVo.PasswordHash,
+            DisplayName = UserVo.DisplayName,
             Status = UserVo.Status,
             CreatedAt = UserVo.CreatedAt,
             UpdatedAt = UserVo.UpdatedAt
@@ -41,7 +43,7 @@ public static class UserMapper
             Id = UserVo.Id,
             Email = UserVo.Email,
             Username = UserVo.Username,
-            PasswordHash = UserVo.PasswordHash,
+            DisplayName = UserVo.DisplayName,
             Status = UserVo.Status,
             CreatedAt = UserVo.CreatedAt,
             UpdatedAt = UserVo.UpdatedAt
@@ -55,7 +57,7 @@ public static class UserMapper
             Id = UserDto.Id,
             Email = UserDto.Email,
             Username = UserDto.Username,
-            PasswordHash = UserDto.PasswordHash,
+            DisplayName = UserDto.DisplayName,
             Status = UserDto.Status,
             CreatedAt = UserDto.CreatedAt,
             UpdatedAt = UserDto.UpdatedAt

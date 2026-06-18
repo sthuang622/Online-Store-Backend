@@ -7,8 +7,7 @@ public record UserDto
     public string Email { get; init; } = string.Empty;
 
     public string Username { get; init; } = string.Empty;
-
-    public string? PasswordHash { get; init; }
+    public string DisplayName { get; init; } = string.Empty;
 
     public string Status { get; init; } = string.Empty;
 

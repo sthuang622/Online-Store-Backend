@@ -3,6 +3,8 @@ using Online_Store_Backend_WebAPI.Models.VOs;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Util.Mappers;
 using Online_Store_Backend_WebAPI.DB;
+using Microsoft.AspNetCore.Identity;
+using Online_Store_Backend_WebAPI.DB.Data;
 
 namespace Online_Store_Backend_WebAPI.Repositories.Implementations;
 
@@ -26,12 +28,49 @@ public class UserRepository : IUserRepository
             .ToList();
     }
 
-    public async Task<UserVo?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
+    private async Task<User> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
     {
         var item = await _context.Users
             .AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
 
-        return item?.ToVo();
+        return item;
+    }
+
+    private async Task<User?> GetByEmailInternal(string email, CancellationToken cancellationToken = default) {
+        var item = await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(item => email == item.Email, cancellationToken);
+        return item;
+    }
+
+    public async Task<UserVo> GetByEmail(string email, CancellationToken cancellationToken = default) {
+        var user = await GetByEmailInternal(email);
+        if(user == null) throw new Exception("Unable to find user");
+        return user.ToVo();
+
+    }
+
+    public async Task<bool> UpdateEmail(ulong id, string newEmail) {
+        var user = await GetByIdAsync(id);
+
+        user.Email = newEmail;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+
+    }
+
+    public async Task<bool> UpdatePassword(ulong id, string newPassword) {
+        var user = await GetByIdAsync(id);
+
+        user.PasswordHash = newPassword;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }
