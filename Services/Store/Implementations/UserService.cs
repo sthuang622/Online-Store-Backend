@@ -23,9 +23,5 @@ public class UserService : IUserService
             .ToList();
     }
 
-    public async Task<UserDto?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
-    {
-        var item = await _repository.GetByIdAsync(id, cancellationToken);
-        return item?.ToDto();
-    }
+
 }
