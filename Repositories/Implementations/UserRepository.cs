@@ -44,33 +44,36 @@ public class UserRepository : IUserRepository
         return item;
     }
 
-    public async Task<UserVo> GetByEmail(string email, CancellationToken cancellationToken = default) {
+    public async Task<UserVo?> GetByEmail(string email, CancellationToken cancellationToken = default) {
         var user = await GetByEmailInternal(email);
-        if(user == null) throw new Exception("Unable to find user");
-        return user.ToVo();
+        return user?.ToVo();
 
     }
 
     public async Task<bool> UpdateEmail(ulong id, string newEmail) {
-        var user = await GetByIdAsync(id);
+        try {
+            var user = await GetByIdAsync(id);
 
-        user.Email = newEmail;
-        user.UpdatedAt = DateTime.UtcNow;
+            user.Email = newEmail;
+            user.UpdatedAt = DateTime.UtcNow;
 
-        await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-        return true;
+            return true;
+        } catch(Exception ex) { return false; }
 
     }
 
     public async Task<bool> UpdatePassword(ulong id, string newPassword) {
-        var user = await GetByIdAsync(id);
+        try {
+            var user = await GetByIdAsync(id);
 
-        user.PasswordHash = newPassword;
-        user.UpdatedAt = DateTime.UtcNow;
+            user.PasswordHash = newPassword;
+            user.UpdatedAt = DateTime.UtcNow;
 
-        await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-        return true;
+            return true;
+        } catch (Exception ex) { return false; }
     }
 }
