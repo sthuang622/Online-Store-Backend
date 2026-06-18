@@ -2,14 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Online_Store_Backend_WebAPI.Models.VOs;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Util.Mappers;
+using Online_Store_Backend_WebAPI.DB;
 
 namespace Online_Store_Backend_WebAPI.Repositories.Implementations;
 
 public class UserRepository : IUserRepository
 {
-    private readonly global::Online_Store_Backend_WebAPI.DB.AppContext _context;
+    private readonly AppDBContext _context;
 
-    public UserRepository(global::Online_Store_Backend_WebAPI.DB.AppContext context)
+    public UserRepository(AppDBContext context)
     {
         _context = context;
     }

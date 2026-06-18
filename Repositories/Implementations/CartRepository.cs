@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Online_Store_Backend_WebAPI.Models.VOs;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
+using Online_Store_Backend_WebAPI.DB;
 using Online_Store_Backend_WebAPI.Util.Mappers;
 
 namespace Online_Store_Backend_WebAPI.Repositories.Implementations;
 
 public class CartRepository : ICartRepository
 {
-    private readonly global::Online_Store_Backend_WebAPI.DB.AppContext _context;
+    private readonly AppDBContext _context;
 
-    public CartRepository(global::Online_Store_Backend_WebAPI.DB.AppContext context)
+    public CartRepository(AppDBContext context)
     {
         _context = context;
     }

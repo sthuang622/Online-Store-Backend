@@ -2,14 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Online_Store_Backend_WebAPI.Models.VOs;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Util.Mappers;
+using Online_Store_Backend_WebAPI.DB;
 
 namespace Online_Store_Backend_WebAPI.Repositories.Implementations;
 
 public class ReviewRepository : IReviewRepository
 {
-    private readonly global::Online_Store_Backend_WebAPI.DB.AppContext _context;
+    private readonly AppDBContext _context;
 
-    public ReviewRepository(global::Online_Store_Backend_WebAPI.DB.AppContext context)
+    public ReviewRepository(AppDBContext context)
     {
         _context = context;
     }

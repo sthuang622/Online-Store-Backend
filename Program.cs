@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var cs = builder.Configuration.GetConnectionString("SteamStore")
     ?? throw new InvalidOperationException("Connection string 'SteamStore' was not found.");
 
-builder.Services.AddDbContext<global::Online_Store_Backend_WebAPI.DB.AppContext>(options =>
+builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseMySql(cs, ServerVersion.AutoDetect(cs)));
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();

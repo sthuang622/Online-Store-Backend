@@ -2,14 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Online_Store_Backend_WebAPI.Models.VOs;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Util.Mappers;
+using Online_Store_Backend_WebAPI.DB;
 
 namespace Online_Store_Backend_WebAPI.Repositories.Implementations;
 
 public class RefundRepository : IRefundRepository
 {
-    private readonly global::Online_Store_Backend_WebAPI.DB.AppContext _context;
+    private readonly AppDBContext _context;
 
-    public RefundRepository(global::Online_Store_Backend_WebAPI.DB.AppContext context)
+    public RefundRepository(AppDBContext context)
     {
         _context = context;
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
@@ -6,8 +6,8 @@ using Online_Store_Backend_WebAPI.DB.Data;
 
 namespace Online_Store_Backend_WebAPI.DB;
 
-public partial class AppContext : Microsoft.EntityFrameworkCore.DbContext{
-    public AppContext(DbContextOptions<AppContext> options)
+public partial class AppDBContext : DbContext{
+    public AppDBContext(DbContextOptions<AppDBContext> options)
         : base(options) {
     }
 
