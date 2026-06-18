@@ -2,28 +2,28 @@ using Microsoft.AspNetCore.Mvc;
 using Online_Store_Backend_WebAPI.Models.DTOs;
 using Online_Store_Backend_WebAPI.Services.Store.Abstractions;
 
-namespace Online_Store_Backend_WebAPI.Controllers;
+namespace Online_Store_Backend_WebAPI.Controllers.Business;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PaymentsController : ControllerBase
+public class OrderItemsController : ControllerBase
 {
-    private readonly IPaymentService _service;
+    private readonly IOrderItemService _service;
 
-    public PaymentsController(IPaymentService service)
+    public OrderItemsController(IOrderItemService service)
     {
         _service = service;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<PaymentDto>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<OrderItemDto>>> GetAll(CancellationToken cancellationToken)
     {
         var items = await _service.GetAllAsync(cancellationToken);
         return Ok(items);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<PaymentDto>> GetById(ulong id, CancellationToken cancellationToken)
+    public async Task<ActionResult<OrderItemDto>> GetById(ulong id, CancellationToken cancellationToken)
     {
         var item = await _service.GetByIdAsync(id, cancellationToken);
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Online_Store_Backend_WebAPI.Models.DTOs;
 using Online_Store_Backend_WebAPI.Services.Store.Abstractions;
 
-namespace Online_Store_Backend_WebAPI.Controllers;
+namespace Online_Store_Backend_WebAPI.Controllers.Business;
 
 [ApiController]
 [Route("api/[controller]")]
