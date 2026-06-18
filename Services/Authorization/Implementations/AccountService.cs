@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using Online_Store_Backend_WebAPI.Models.DTOs;
+using Online_Store_Backend_WebAPI.Models.Response;
 using Online_Store_Backend_WebAPI.Models.VOs;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Repositories.Implementations;
