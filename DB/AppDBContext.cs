@@ -29,6 +29,8 @@ public partial class AppDBContext : DbContext{
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
 
+    public virtual DbSet<OptionItem> OptionItems { get; set; }
+
     public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -48,10 +50,6 @@ public partial class AppDBContext : DbContext{
     public virtual DbSet<UserLibrary> UserLibraries { get; set; }
 
     public virtual DbSet<Wishlist> Wishlists { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=store;user=app;password=pass", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.45-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder
@@ -360,6 +358,29 @@ public partial class AppDBContext : DbContext{
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_oi_product");
+        });
+
+        modelBuilder.Entity<OptionItem>(entity => {
+            entity.HasKey(e => new { e.CodeId, e.CodeKind })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("options");
+
+            entity.HasIndex(e => e.CodeId, "idx_options_code_id");
+
+            entity.Property(e => e.CodeId)
+                .HasMaxLength(64)
+                .HasColumnName("code_id");
+            entity.Property(e => e.CodeKind)
+                .HasMaxLength(64)
+                .HasColumnName("code_kind");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .HasColumnName("name");
+            entity.Property(e => e.Description)
+                .HasMaxLength(1024)
+                .HasColumnName("description");
         });
 
         modelBuilder.Entity<Payment>(entity => {
@@ -672,8 +693,5 @@ public partial class AppDBContext : DbContext{
                 .HasConstraintName("fk_wl_user");
         });
 
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
