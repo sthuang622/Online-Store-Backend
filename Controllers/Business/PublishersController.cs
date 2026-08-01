@@ -34,4 +34,24 @@ public class PublishersController : ControllerBase
 
         return Ok(item);
     }
+
+    [HttpPost("{publisherId}/games")]
+    public async Task<ActionResult<GameDto>> AddGame(ulong publisherId, [FromBody] CreatePublisherGameRequestDto request, CancellationToken cancellationToken)
+    {
+        var publisher = await _service.GetByIdAsync(publisherId, cancellationToken);
+
+        if (publisher is null)
+        {
+            return NotFound();
+        }
+
+        var game = await _service.AddGameAsync(publisherId, request, cancellationToken);
+
+        if (game is null)
+        {
+            return Forbid();
+        }
+
+        return Created($"/api/games/{game.Id}", game);
+    }
 }

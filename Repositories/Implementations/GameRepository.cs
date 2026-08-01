@@ -61,4 +61,14 @@ public class GameRepository : IGameRepository
             .Select(item => item.ToVo())
             .ToList();
     }
+
+    public async Task<GameVo> CreateAsync(GameVo game, CancellationToken cancellationToken = default)
+    {
+        var dbGame = game.ToDbObject();
+
+        _context.Games.Add(dbGame);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return dbGame.ToVo();
+    }
 }

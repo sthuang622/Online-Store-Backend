@@ -7,4 +7,6 @@ public interface IPublisherService
     Task<IReadOnlyList<PublisherDto>> GetAllAsync(CancellationToken cancellationToken = default);
 
     Task<PublisherDto?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default);
+
+    Task<GameDto?> AddGameAsync(ulong publisherId, CreatePublisherGameRequestDto request, CancellationToken cancellationToken = default);
 }
