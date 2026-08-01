@@ -6,4 +6,5 @@ public interface IUserService
 {
     Task<IReadOnlyList<UserDto>> GetAllAsync(CancellationToken cancellationToken = default);
 
+    Task<UserDto?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default);
 }

@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Online_Store_Backend_WebAPI.DB;
+using Online_Store_Backend_WebAPI.Models.Configurations;
 using Online_Store_Backend_WebAPI.Repositories.Abstractions;
 using Online_Store_Backend_WebAPI.Repositories.Implementations;
+using Online_Store_Backend_WebAPI.Services.Authorization.Abstractions;
+using Online_Store_Backend_WebAPI.Services.Authorization.Implementations;
 using Online_Store_Backend_WebAPI.Services.Store.Abstractions;
 using Online_Store_Backend_WebAPI.Services.Store.Implementations;
 
@@ -10,8 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 var cs = builder.Configuration.GetConnectionString("SteamStore")
     ?? throw new InvalidOperationException("Connection string 'SteamStore' was not found.");
 
+builder.Services.Configure<AuthorizationOptions>(
+    builder.Configuration.GetSection("Authorization"));
 builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseMySql(cs, ServerVersion.AutoDetect(cs)));
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 builder.Services.AddScoped<IBundleItemRepository, BundleItemRepository>();

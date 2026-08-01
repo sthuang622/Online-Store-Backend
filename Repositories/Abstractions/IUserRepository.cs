@@ -6,6 +6,8 @@ public interface IUserRepository
 {
     Task<IReadOnlyList<UserVo>> GetAllAsync(CancellationToken cancellationToken = default);
 
+    Task<UserVo?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default);
+
     public Task<UserVo?> GetByEmail(string email, CancellationToken cancellationToken = default);
 
     public Task<bool> UpdateEmail(ulong id, string newEmail);

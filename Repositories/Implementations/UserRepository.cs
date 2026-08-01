@@ -28,13 +28,19 @@ public class UserRepository : IUserRepository
             .ToList();
     }
 
-    private async Task<User> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
+    private async Task<User?> GetByIdInternalAsync(ulong id, CancellationToken cancellationToken = default)
     {
         var item = await _context.Users
             .AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
 
         return item;
+    }
+
+    public async Task<UserVo?> GetByIdAsync(ulong id, CancellationToken cancellationToken = default)
+    {
+        var user = await GetByIdInternalAsync(id, cancellationToken);
+        return user?.ToVo();
     }
 
     private async Task<User?> GetByEmailInternal(string email, CancellationToken cancellationToken = default) {
@@ -52,7 +58,8 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> UpdateEmail(ulong id, string newEmail) {
         try {
-            var user = await GetByIdAsync(id);
+            var user = await GetByIdInternalAsync(id);
+            if (user is null) return false;
 
             user.Email = newEmail;
             user.UpdatedAt = DateTime.UtcNow;
@@ -66,7 +73,8 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> UpdatePassword(ulong id, string newPassword) {
         try {
-            var user = await GetByIdAsync(id);
+            var user = await GetByIdInternalAsync(id);
+            if (user is null) return false;
 
             user.PasswordHash = newPassword;
             user.UpdatedAt = DateTime.UtcNow;
